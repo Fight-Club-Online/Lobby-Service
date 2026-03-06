@@ -1,6 +1,6 @@
-package com.FightClub.Lobby_Service.Domain;
+package com.FightClub.Lobby_Service.Domain.Model;
 
-import com.FightClub.Lobby_Service.Domain.Enums.roomState;
+import com.FightClub.Lobby_Service.Domain.Model.Enums.roomState;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -11,7 +11,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class Room {
-    @NonNull
     private long roomId;
     private String roomCode;
     private roomState roomState;

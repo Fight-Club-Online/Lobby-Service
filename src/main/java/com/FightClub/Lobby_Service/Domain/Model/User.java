@@ -1,6 +1,6 @@
-package com.FightClub.Lobby_Service.Domain;
+package com.FightClub.Lobby_Service.Domain.Model;
 
-import com.FightClub.Lobby_Service.Domain.Notifications.Notification;
+import com.FightClub.Lobby_Service.Domain.Model.Notifications.Notification;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

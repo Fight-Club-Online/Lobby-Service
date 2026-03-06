@@ -1,12 +1,10 @@
-package com.FightClub.Lobby_Service.Domain;
+package com.FightClub.Lobby_Service.Domain.Model;
 
-import com.FightClub.Lobby_Service.Domain.Enums.playerType;
+import com.FightClub.Lobby_Service.Domain.Model.Enums.playerType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
 
 @Data
 @NoArgsConstructor
