@@ -23,9 +23,11 @@ public class RoomController {
     public void createRoom(String hostId) {
         Room room = createPrivateRoomUseCase.createPrivateRoom(hostId);
         messagingTemplate.convertAndSendToUser(hostId, "/queue/mi-sala", room); //Enviar un mensaje al creator
+        //Spring pondra un /user al path -> /user/queue/mi-sala
+
 
         System.out.println("Sala creada: " + room.getRoomCode());
-        //en el front se debe aceptar la conexion y en websockets ya se suscribe a la sala /game/hostId
+        //en el front se debe aceptar la conexion y en websockets ya se suscribe al path y luego un send a /game/hostId
     }
 
     @MessageMapping("/successful-connection")
