@@ -9,6 +9,7 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import java.util.Map;
 import java.util.Random;
 
 @Controller
@@ -23,11 +24,18 @@ public class RoomController {
         Room room = createPrivateRoomUseCase.createPrivateRoom(hostId);
         messagingTemplate.convertAndSendToUser(hostId, "/queue/mi-sala", room); //Enviar un mensaje al creator
 
+        System.out.println("Sala creada: " + room.getRoomCode());
         //en el front se debe aceptar la conexion y en websockets ya se suscribe a la sala /game/hostId
     }
 
     @MessageMapping("/successful-connection")
-    public void successfulConnection(String playerId) {
+    public void successfulConnection(Map<String, String> payload) {
+        String roomId = payload.get("roomId");
+        String user = payload.get("user");
+
+        System.out.println("Confirmado: " + user + " ya esta en " + roomId);
+
+        messagingTemplate.convertAndSend("/salas/" + roomId, user + " ha entrado oficialmente.");
     }
 
 }
