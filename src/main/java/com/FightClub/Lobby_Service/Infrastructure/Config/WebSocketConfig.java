@@ -21,7 +21,7 @@ public class WebSocketConfig  implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker("/room","/queue"); // Sv le habla al cliente todo para escuchar ; Estoy suscrito a la room x ; queue -> personal
         // /room/{codeRom}
         registry.setApplicationDestinationPrefixes("/game"); // cliente -> sv (CLiente envia info al websocket) -> todo para hablar
-
+        registry.setUserDestinationPrefix("/user");
     }
 
 }

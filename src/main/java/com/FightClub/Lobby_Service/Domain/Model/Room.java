@@ -1,6 +1,6 @@
 package com.FightClub.Lobby_Service.Domain.Model;
 
-import com.FightClub.Lobby_Service.Domain.Model.Enums.roomState;
+import com.FightClub.Lobby_Service.Domain.Model.Enums.RoomState;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
 public class Room {
     private long roomId;
     private String roomCode;
-    private roomState roomState;
+    private RoomState roomState;
     private String hostId;
     private int maxPlayers;
     private int currentPlayers;

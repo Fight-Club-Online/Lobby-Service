@@ -2,6 +2,7 @@ package com.FightClub.Lobby_Service.Application.Ports.Output;
 
 import com.FightClub.Lobby_Service.Domain.Model.Room;
 
-public interface RoomCreation {
-    Room createRoom(String hostId);
+
+public interface JoinRoomWs {
+    Room joinRoom(String roomId, String guestId);
 }
