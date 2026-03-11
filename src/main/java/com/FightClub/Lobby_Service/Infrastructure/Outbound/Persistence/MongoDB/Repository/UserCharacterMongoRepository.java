@@ -6,9 +6,12 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserCharacterMongoRepository extends MongoRepository <UserCharacterEntity, String>{
-    List<UserCharacter> findByUserID(String userId);
-    UserCharacter findByCharacterID(Long characterID);
-    UserCharacter save(UserCharacter userCharacter);
-    UserCharacter findByCharacterName(String characterName);
+public interface UserCharacterMongoRepository
+        extends MongoRepository<UserCharacterEntity, String> {
+
+    List<UserCharacterEntity> findByUser(String user);
+
+    UserCharacterEntity findByCharacterCharacterId(Long characterId);
+
+    UserCharacterEntity findByCharacterCharacterName(String characterName);
 }
