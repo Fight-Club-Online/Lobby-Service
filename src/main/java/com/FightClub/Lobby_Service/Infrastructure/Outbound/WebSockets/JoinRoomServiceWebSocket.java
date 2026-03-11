@@ -16,6 +16,7 @@ public class JoinRoomServiceWebSocket implements JoinRoomWs {
 
     @Override
     public Room joinRoom(String roomId, String guestId) {
+
         messagingTemplate.convertAndSend(
                 "/room/" + roomId,
                 guestId + " ha entrado"

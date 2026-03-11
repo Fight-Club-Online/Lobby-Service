@@ -16,3 +16,4 @@ public class Player {
     private playerType playerType;
     private long characterId;
 }
+
