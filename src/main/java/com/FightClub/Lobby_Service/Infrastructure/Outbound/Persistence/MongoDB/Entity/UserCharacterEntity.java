@@ -18,7 +18,7 @@ public class UserCharacterEntity {
     @Id
     private String id;
 
-    private Character character;
+    private CharacterEntity character;
 
     private String user;
 

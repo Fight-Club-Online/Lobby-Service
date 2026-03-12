@@ -14,7 +14,7 @@ import java.util.List;
 public class UserCharacterController {
     private final SeeUserCharactersUseCase seeUserCharactersUseCase;
 
-    @GetMapping("/see-user-characters")
+    @GetMapping("/characters")
     public List<UserCharacter> seeUserCharacters(String userId){
         return seeUserCharactersUseCase.seeUserCharacters(userId);
     }
