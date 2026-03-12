@@ -41,7 +41,17 @@ public class SearchRoomCacheRedis implements SearchRoomCache {
         Room room = (Room) redisTemplate.opsForValue().get("room:"+roomId);
 
         if(room == null) throw new RuntimeException("Room not found");
-        return room.getCurrentPlayers();
+        return room.getMaxPlayers() - room.getCurrentPlayers();
     }
 
+    @Override
+    public Room getRoomById(long roomId) {
+        return (Room) redisTemplate.opsForValue().get("room:"+String.valueOf(roomId));
+    }
+
+    @Override
+    public Room getRoomByCode(String roomCode) {
+        String roomId = (String) redisTemplate.opsForValue().get("roomCode:"+roomCode);
+        return (Room) redisTemplate.opsForValue().get("room:"+roomId);
+    }
 }

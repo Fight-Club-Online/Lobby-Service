@@ -1,7 +1,9 @@
 package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest;
 
 import com.FightClub.Lobby_Service.Application.DTO.JoinRoomCommandDTO;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Room.JoinAsSpectatorUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.JoinToPrivateRoomUseCase;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Room.PlayerLeaveRoomUseCase;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Socket.RoomSocketRequestDTO;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStateDTO;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStateMapper;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Controller;
 public class RoomSocketController {
 
     private final JoinToPrivateRoomUseCase jointoPrivateRoomUseCase;
+    private final JoinAsSpectatorUseCase joinAsSpectatorUseCase;
+    private final PlayerLeaveRoomUseCase playerLeaveRoomUseCase;
     private final RoomStateMapper roomStateMapper;
 
 
@@ -31,7 +35,21 @@ public class RoomSocketController {
         //front se suscribe a /room/{roomOD}
         //Un amigo entra entonces front hace send /game/{roomId}
         // el convertAndSend notifiica a toda la sala /room/{roomID}
+    }
 
+
+    @MessageMapping("/join-room/spectator")
+    public RoomStateDTO joinRoomAsSpectator(RoomSocketRequestDTO roomInfo){
+        JoinRoomCommandDTO pojo = new JoinRoomCommandDTO(
+                roomInfo.getRoomCode(),
+                roomInfo.getUserId()
+        );
+        return roomStateMapper.toDto(joinAsSpectatorUseCase.joinAsSpectator(pojo));
+    }
+
+    @MessageMapping("/leave-room")
+    public void leaveRoom(String userId) {
+        playerLeaveRoomUseCase.leaveRoom(userId);
     }
 
 

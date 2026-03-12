@@ -20,17 +20,4 @@ public class RoomServiceRedisWriter implements RoomCacheWriter {
         redisTemplate.opsForValue().set("room:"+roomId, room,10, TimeUnit.MINUTES);
         redisTemplate.opsForValue().set("roomCode:"+room.getRoomCode(), roomId, 10, TimeUnit.MINUTES);
     }
-
-    @Override
-    public void addPlayerToRoomById(String userId, long roomId) {
-        Room r = (Room) redisTemplate.opsForValue().get("room:"+String.valueOf(roomId));
-
-    }
-
-    @Override
-    public void addPlayerToRoomByCode(String userId, String roomCode) {
-        Room r = (Room) redisTemplate.opsForValue().get("roomCode:"+roomCode);
-    }
-
-
 }
