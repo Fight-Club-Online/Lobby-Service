@@ -16,7 +16,7 @@ public class JoinToPrivateRoomImpl implements JoinToPrivateRoomUseCase {
 
     @Override
     public Room joinToPrivateRoom(JoinRoomCommandDTO joinRoomCommandDTO) {
-        if(!searchRoomCache.searchRoom(joinRoomCommandDTO.roomCode())){
+        if(!searchRoomCache.searchRoomByCode(joinRoomCommandDTO.roomCode())){
             throw new RuntimeException("Room not found");
         }
         return joinRoomWs.joinRoom(joinRoomCommandDTO.roomCode(), joinRoomCommandDTO.guestId());

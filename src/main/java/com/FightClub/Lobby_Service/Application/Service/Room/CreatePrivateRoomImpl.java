@@ -1,7 +1,7 @@
 package com.FightClub.Lobby_Service.Application.Service.Room;
 
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.CreatePrivateRoomUseCase;
-import com.FightClub.Lobby_Service.Application.Ports.Output.SaveRoomCache;
+import com.FightClub.Lobby_Service.Application.Ports.Output.RoomCacheWriter;
 import com.FightClub.Lobby_Service.Domain.Model.Enums.RoomState;
 import com.FightClub.Lobby_Service.Domain.Model.Room;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.util.Random;
 @AllArgsConstructor
 public class CreatePrivateRoomImpl implements CreatePrivateRoomUseCase {
 
-    private final SaveRoomCache saveRoomCache;
+    private final RoomCacheWriter roomCacheWriter;
 
     @Override
     public Room createPrivateRoom(String hostId) {
@@ -29,7 +29,7 @@ public class CreatePrivateRoomImpl implements CreatePrivateRoomUseCase {
                 .currentPlayers(1)
                 .currentSpectators(0)
                 .build();
-        saveRoomCache.saveRoom(r);
+        roomCacheWriter.saveRoom(r);
         return r;
     }
 }
