@@ -1,9 +1,6 @@
 package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest;
 
-import com.FightClub.Lobby_Service.Application.Ports.Input.Room.CreatePrivateRoomUseCase;
-import com.FightClub.Lobby_Service.Application.Ports.Input.Room.GetPrivateRoomCodeUseCase;
-import com.FightClub.Lobby_Service.Application.Ports.Input.Room.GetRoomAvailabilityUseCase;
-import com.FightClub.Lobby_Service.Application.Ports.Input.Room.PlayerLeaveRoomUseCase;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Room.*;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Rest.RoomResponseDTO;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Rest.RoomResponseMapper;
 import lombok.AllArgsConstructor;
@@ -17,7 +14,7 @@ public class RoomRestController {
     private final CreatePrivateRoomUseCase createPrivateRoomUseCase;
     private final GetPrivateRoomCodeUseCase getPrivateRoomCodeUseCase;
     private final GetRoomAvailabilityUseCase getRoomAvailabilityUseCase;
-    private final PlayerLeaveRoomUseCase playerLeaveRoomUseCase;
+    private final StartRoomUseCase startRoomUseCase;
     private final RoomResponseMapper roomResponseMapper;
 
     @PostMapping("/create-private")
@@ -50,13 +47,8 @@ public class RoomRestController {
     }
 
 
-
-    @PostMapping("/leave/{userId}")
-    @io.swagger.v3.oas.annotations.Operation(
-            summary = "Salir de la sala",
-            description = "Se sale de la sala con el id de esta"
-    )
-    public void leaveRoom(@PathVariable String userId){
-        playerLeaveRoomUseCase.leaveRoom(userId);
+    @PostMapping("/start-fight")
+    public RoomResponseDTO startFight(String roomCode) {
+        return roomResponseMapper.toDTO(startRoomUseCase.startRoom(roomCode));
     }
 }

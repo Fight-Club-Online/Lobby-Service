@@ -1,9 +1,12 @@
 package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Rest;
 
+import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Player.PlayerDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -17,5 +20,7 @@ public class RoomResponseDTO {
     private String roomState;
     private int maxPlayers;
     private int currentPlayers;
-
+    private int maxSpectators;
+    private int currentSpectators;
+    private List<PlayerDto> players;
 }

@@ -16,24 +16,33 @@ import java.util.concurrent.TimeUnit;
 public class PlayerCacheWriterRedis implements PlayerCacheWriter {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final UpdateTTL updateTTL;
 
     @Override
     public Room leaveRoom(String userId) {
-        String roomId = (String) redisTemplate.opsForValue().get("player:room:"+userId);
-        Room r = (Room) redisTemplate.opsForValue().get("room:"+roomId);
+        Object roomId =  redisTemplate.opsForValue().get(RedisKeys.PLAYER_ROOM+userId);
+        if(roomId == null) throw new RuntimeException("User not in room");
+        long roomIdLong = (long) roomId;
 
-        if(r == null) throw new RuntimeException("Room not found"+roomId);
+        Room r = (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
+
+        if(r == null) throw new RuntimeException("Room not found"+roomIdLong);
 
         r.setCurrentPlayers(r.getCurrentPlayers()-1);
-        r.setPlayers(r.getPlayers().stream().filter(p -> !p.getUserId().equals(userId)).toList());
 
         if (r.getCurrentPlayers() == 0 || r.getHostId().equals(userId)){
-            redisTemplate.delete("room:"+roomId);
-            redisTemplate.delete("roomCode:"+r.getRoomCode());
-            redisTemplate.delete("player:room:"+userId);
-        }
+            redisTemplate.delete(RedisKeys.ROOM +roomIdLong);
+            redisTemplate.delete(RedisKeys.ROOM_CODE+r.getRoomCode());
+            for(Player p : r.getPlayers()){
+                redisTemplate.delete(RedisKeys.PLAYER_ROOM+p.getUserId());
 
-        redisTemplate.opsForValue().set("room:"+roomId, r,10, TimeUnit.MINUTES);
+            }
+            return Room.builder().roomId(r.getRoomId()).build();
+        }
+        r.setPlayers(r.getPlayers().stream().filter(p -> !p.getUserId().equals(userId)).toList());
+        redisTemplate.delete(RedisKeys.PLAYER_ROOM + userId);
+
+        updateTTL.updateTTL(r);
         return r;
     }
 
@@ -48,8 +57,7 @@ public class PlayerCacheWriterRedis implements PlayerCacheWriter {
 
         addPlayerToRoom(r, player);
 
-        redisTemplate.opsForValue().set("room:"+String.valueOf(roomId), r,10, TimeUnit.MINUTES);
-        redisTemplate.opsForValue().set("player:room:"+userId, String.valueOf(roomId),10, TimeUnit.MINUTES);
+        updateTTL.updateTTL(r);
         return r;
     }
 
@@ -60,15 +68,15 @@ public class PlayerCacheWriterRedis implements PlayerCacheWriter {
         }
 
         Room r = getRoom(roomId);
-        verifyPlayer(r, userId);
+        //verifyPlayer(r, userId);
 
         r.setCurrentSpectators(r.getCurrentSpectators()+1);
         Player player = Player.builder().userId(userId).roomCode(r.getRoomCode()).playerType(role).build();
 
         addPlayerToRoom(r, player);
 
-        redisTemplate.opsForValue().set("room:"+String.valueOf(roomId), r,10, TimeUnit.MINUTES);
-        redisTemplate.opsForValue().set("player:room:"+userId, String.valueOf(roomId),10, TimeUnit.MINUTES);
+        updateTTL.updateTTL(r);
+
         return r;
     }
 
@@ -80,12 +88,12 @@ public class PlayerCacheWriterRedis implements PlayerCacheWriter {
 
     private void verifyPlayer(Room r, String userId){
         if(r.getCurrentPlayers() >= r.getMaxPlayers()) throw new RuntimeException("Room is full");
-        Object player = redisTemplate.opsForValue().get("player:room:"+userId);
+        Object player = redisTemplate.opsForValue().get(RedisKeys.PLAYER_ROOM+userId);
         if(player != null) throw new RuntimeException("User already in room");
     }
 
     private Room getRoom(long roomId){
-        Room r = (Room) redisTemplate.opsForValue().get("room:"+String.valueOf(roomId));
+        Room r = (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+String.valueOf(roomId));
         if(r == null) throw new RuntimeException("Room not found");
         return r;
     }

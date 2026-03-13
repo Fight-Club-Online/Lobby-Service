@@ -1,18 +1,15 @@
-package com.FightClub.Lobby_Service.Domain.Model;
+package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Player;
 
 import com.FightClub.Lobby_Service.Domain.Model.Enums.PlayerType;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Player {
+@NoArgsConstructor
+public class PlayerDto {
     private String userId;
     private String roomCode;
     private PlayerType playerType;
 }
-

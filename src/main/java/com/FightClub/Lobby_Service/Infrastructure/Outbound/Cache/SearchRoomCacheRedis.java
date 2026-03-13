@@ -15,14 +15,16 @@ public class SearchRoomCacheRedis implements SearchRoomCache {
 
     @Override
     public Boolean searchRoomByCode(String roomCode) {
-        String roomId = (String) redisTemplate.opsForValue().get("roomCode:"+roomCode);
-        Object r = redisTemplate.opsForValue().get("room:"+roomId);
+        Object roomId =  redisTemplate.opsForValue().get(RedisKeys.ROOM_CODE+roomCode);
+        if(roomId == null) return false;
+        long roomIdLong = (long) roomId;
+        Object r = redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
         return r instanceof Room;
     }
 
     @Override
     public Boolean searchRoomById(long roomId) {
-        Object r = redisTemplate.opsForValue().get("room:"+String.valueOf(roomId));
+        Object r = redisTemplate.opsForValue().get(RedisKeys.ROOM+String.valueOf(roomId));
         return r instanceof Room;
     }
 
@@ -30,15 +32,17 @@ public class SearchRoomCacheRedis implements SearchRoomCache {
     @Override
     public String getRoomCode(long roomId) {
         String roomIdString = String.valueOf(roomId);
-        Object r = redisTemplate.opsForValue().get("room:"+roomIdString);
+        Object r = redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdString);
         if(!(r instanceof Room room)) return null;
         return room.getRoomCode();
     }
 
     @Override
     public int getRoomAvailability(String roomCode) {
-        String roomId = (String) redisTemplate.opsForValue().get("roomCode:"+roomCode);
-        Room room = (Room) redisTemplate.opsForValue().get("room:"+roomId);
+        Object roomId =  redisTemplate.opsForValue().get(RedisKeys.ROOM_CODE+roomCode);
+        if(roomId == null) throw new RuntimeException("Room not found");
+        long roomIdLong = (long) roomId;
+        Room room = (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
 
         if(room == null) throw new RuntimeException("Room not found");
         return room.getMaxPlayers() - room.getCurrentPlayers();
@@ -46,12 +50,14 @@ public class SearchRoomCacheRedis implements SearchRoomCache {
 
     @Override
     public Room getRoomById(long roomId) {
-        return (Room) redisTemplate.opsForValue().get("room:"+String.valueOf(roomId));
+        return (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+String.valueOf(roomId));
     }
 
     @Override
     public Room getRoomByCode(String roomCode) {
-        String roomId = (String) redisTemplate.opsForValue().get("roomCode:"+roomCode);
-        return (Room) redisTemplate.opsForValue().get("room:"+roomId);
+        Object roomId =  redisTemplate.opsForValue().get(RedisKeys.ROOM_CODE+roomCode);
+        if(roomId == null) throw new RuntimeException("Room not found");
+        long roomIdLong = (long) roomId;
+        return (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
     }
 }
