@@ -30,4 +30,6 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
                 guestId + " ha salido"
         );
     }
+
+
 }
