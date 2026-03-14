@@ -1,0 +1,13 @@
+target
+.idea
+.git
+.mvn
+*.iml
+*.log
+.DS_Store
+docker-compose.yml
+HELP.md
+mvnw
+mvnw.cmd
+.gitignore
+.gitattributes
