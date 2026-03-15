@@ -1,6 +1,6 @@
 package com.FightClub.Lobby_Service.Domain.Model.Enums;
 
-public enum roomState {
+public enum RoomState {
     IN_PROGRESS,
     WAITING,
     PLAYING,

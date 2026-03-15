@@ -1,4 +1,4 @@
-package com.FightClub.Lobby_Service.Domain.Model;
+package com.FightClub.Lobby_Service.Infrastructure.Outbound.Persistence.MongoDB.Entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Character {
+public class CharacterEntity {
     private long characterId;
     private int characterLevel;
     private String characterName;

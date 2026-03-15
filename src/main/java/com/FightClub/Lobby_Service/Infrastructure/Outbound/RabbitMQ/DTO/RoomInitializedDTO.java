@@ -1,16 +1,12 @@
-package com.FightClub.Lobby_Service.Domain.Model;
+package com.FightClub.Lobby_Service.Infrastructure.Outbound.RabbitMQ.DTO;
 
 import com.FightClub.Lobby_Service.Domain.Model.Enums.RoomState;
-import lombok.*;
+import com.FightClub.Lobby_Service.Domain.Model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Builder
-public class Room {
+public class RoomInitializedDTO {
     private long roomId;
     private String roomCode;
     private RoomState roomState;
@@ -19,5 +15,5 @@ public class Room {
     private int currentPlayers;
     private int maxSpectators;
     private int currentSpectators;
-    private List<Player> players = new ArrayList<>();
+    private List<PlayerEventDTO> players ;
 }
