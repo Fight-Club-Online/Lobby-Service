@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: fightclubonlinelobbyservice 
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fightclubonlinelobbyservice
+  template:
+    metadata:
+      labels:
+        app: fightclubonlinelobbyservice 
+    spec:
+      containers:
+        - name: fightclubonlinelobbyservice 
+          image: cloudarsw.azurecr.io/fightclubonlinelobbyservice
+          ports:
+          - containerPort: 8080
