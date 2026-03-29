@@ -21,8 +21,11 @@ public class JoinAsSpectatorImpl implements JoinAsSpectatorUseCase {
     @Override
     public Room joinAsSpectator(JoinRoomCommandDTO joinRoomCommandDTO) {
         Room r = searchRoomCache.getRoomByCode(joinRoomCommandDTO.roomCode());
-        roomWsWriter.joinRoom(joinRoomCommandDTO.roomCode(), joinRoomCommandDTO.guestId());
-        return playerCacheWriter.addPlayerToRoomByRole(joinRoomCommandDTO.guestId(),r.getRoomId(), PlayerType.SPECTATOR);
+
+        Room updatedRoom = playerCacheWriter.addPlayerToRoomByRole(joinRoomCommandDTO.guestId(),r.getRoomId(), PlayerType.SPECTATOR);
+
+        roomWsWriter.joinRoom(joinRoomCommandDTO.roomCode(),updatedRoom);
+        return updatedRoom;
     }
 
 }

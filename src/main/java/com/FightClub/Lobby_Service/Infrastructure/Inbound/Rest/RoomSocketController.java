@@ -10,10 +10,12 @@ import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStat
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @Controller
 @AllArgsConstructor
+@RequestMapping("/room-ws")
 public class RoomSocketController {
 
     private final JoinToPrivateRoomUseCase jointoPrivateRoomUseCase;
@@ -24,12 +26,12 @@ public class RoomSocketController {
 
 
     @MessageMapping("/join-room") // Alguien llama desde el front esto
-    public RoomStateDTO joinRoom(RoomSocketRequestDTO roomInfo) {
+    public void joinRoom(RoomSocketRequestDTO roomInfo) {
         JoinRoomCommandDTO pojo = new JoinRoomCommandDTO(
                 roomInfo.getRoomCode(),
                 roomInfo.getUserId()
         );
-        return roomStateMapper.toDto(jointoPrivateRoomUseCase.joinToPrivateRoom(pojo));
+        roomStateMapper.toDto(jointoPrivateRoomUseCase.joinToPrivateRoom(pojo));
         //front rest http al restController
         //front se conecta al ws
         //front se suscribe a /room/{roomOD}
