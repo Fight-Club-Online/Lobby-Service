@@ -2,6 +2,7 @@ package com.FightClub.Lobby_Service.Application.Service.Room;
 
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.GetRoomAvailabilityUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Output.SearchRoomCache;
+import com.FightClub.Lobby_Service.Domain.Model.Room;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +14,9 @@ public class GetRoomAvailabilityImpl implements GetRoomAvailabilityUseCase {
 
 
     @Override
-    public int getRoomAvailability(String roomCode){
-        return searchRoomCache.getRoomAvailability(roomCode);
+    public Room getRoomAvailability(String roomCode){
+
+        return searchRoomCache.getRoomByCode(roomCode);
     }
 
 }

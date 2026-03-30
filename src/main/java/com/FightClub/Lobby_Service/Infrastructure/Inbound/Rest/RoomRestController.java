@@ -3,6 +3,8 @@ package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.*;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Rest.RoomResponseDTO;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Rest.RoomResponseMapper;
+import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStateDTO;
+import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStateMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,6 +18,7 @@ public class RoomRestController {
     private final GetRoomAvailabilityUseCase getRoomAvailabilityUseCase;
     private final StartRoomUseCase startRoomUseCase;
     private final RoomResponseMapper roomResponseMapper;
+    private final RoomStateMapper roomStateMapper;
 
     @PostMapping("/create-private")
     @io.swagger.v3.oas.annotations.Operation(
@@ -42,13 +45,13 @@ public class RoomRestController {
             summary = "Obtener Disponibilidad de la sala",
             description = "Se obtiene la disponibilidad de la sala con el codigo de esta"
     )
-    public int getRoomAvailability(String roomCode) {
-        return getRoomAvailabilityUseCase.getRoomAvailability(roomCode);
+    public RoomStateDTO getRoomAvailability(String roomCode) {
+        return roomStateMapper.toDto(getRoomAvailabilityUseCase.getRoomAvailability(roomCode));
     }
 
 
     @PostMapping("/start-fight")
-    public RoomResponseDTO startFight(String roomCode) {
+    public RoomResponseDTO startFight(@RequestParam String roomCode) {
         return roomResponseMapper.toDTO(startRoomUseCase.startRoom(roomCode));
     }
 }
