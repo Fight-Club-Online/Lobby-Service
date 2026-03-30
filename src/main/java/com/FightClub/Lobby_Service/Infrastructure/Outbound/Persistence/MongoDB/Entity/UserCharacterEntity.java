@@ -22,4 +22,6 @@ public class UserCharacterEntity {
 
     private String user;
 
+    private CharacterAssetsEntity assets;
+
 }

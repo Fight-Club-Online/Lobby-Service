@@ -11,8 +11,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class UserCharacter {
+    
     private String id;
-
     private Character character;
     private String user;
+    private CharacterAssets assets;
 }
