@@ -17,13 +17,13 @@ public class UserCharacterController {
     private final SeeUserCharactersUseCase seeUserCharactersUseCase;
     private final CreateUserCharacterUseCase createUserCharacterUseCase;
 
-    @GetMapping("/characters")
+    @GetMapping("user/characters")
     public ResponseEntity<List<UserCharacter>> seeUserCharacters(@RequestParam String userId){
         List<UserCharacter> characters = seeUserCharactersUseCase.seeUserCharacters(userId);
         return ResponseEntity.ok(characters);
     }
 
-    @PostMapping("/characters")
+    @PostMapping("/create")
     public ResponseEntity<UserCharacter> createUserCharacter(@RequestBody CreateUserCharacterDTO dto){
         UserCharacter createdCharacter = createUserCharacterUseCase.createUserCharacter(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdCharacter);
