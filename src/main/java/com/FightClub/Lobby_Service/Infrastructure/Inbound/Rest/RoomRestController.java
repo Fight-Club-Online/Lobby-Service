@@ -50,8 +50,8 @@ public class RoomRestController {
     }
 
 
-    @PostMapping("/start-fight")
-    public RoomResponseDTO startFight(@RequestParam String roomCode) {
+    @PostMapping("/start-fight/{roomCode}")
+    public RoomResponseDTO startFight(@PathVariable  String roomCode) {
         return roomResponseMapper.toDTO(startRoomUseCase.startRoom(roomCode));
     }
 }

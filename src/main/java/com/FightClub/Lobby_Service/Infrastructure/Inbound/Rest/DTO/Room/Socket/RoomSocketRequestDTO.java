@@ -10,4 +10,5 @@ import lombok.NoArgsConstructor;
 public class RoomSocketRequestDTO {
     private String roomCode;
     private String userId;
+    private String playerType;
 }

@@ -28,7 +28,12 @@ public class PlayerCacheWriterRedis implements PlayerCacheWriter {
 
         if(r == null) throw new RuntimeException("Room not found"+roomIdLong);
 
-        r.setCurrentPlayers(r.getCurrentPlayers()-1);
+        Player player = r.getPlayers().stream().filter(p -> p.getUserId().equals(userId)).findFirst().orElseThrow();
+        if(player.getPlayerType().equals(PlayerType.PLAYER)){
+            r.setCurrentPlayers(r.getCurrentPlayers()-1);
+        }else{
+            r.setCurrentSpectators(r.getCurrentSpectators()-1);
+        }
 
         if (r.getCurrentPlayers() == 0 || r.getHostId().equals(userId)){
             redisTemplate.delete(RedisKeys.ROOM +roomIdLong);
@@ -64,7 +69,7 @@ public class PlayerCacheWriterRedis implements PlayerCacheWriter {
     @Override
     public Room addPlayerToRoomByRole(String userId, long roomId, PlayerType role){
         if(role.equals(PlayerType.PLAYER)){
-            addPlayerToRoom(userId, roomId);
+           return  addPlayerToRoom(userId, roomId);
         }
 
         Room r = getRoom(roomId);

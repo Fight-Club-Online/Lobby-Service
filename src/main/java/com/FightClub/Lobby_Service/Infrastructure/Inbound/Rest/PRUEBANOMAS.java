@@ -2,10 +2,13 @@ package com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest;
 
 
 import com.FightClub.Lobby_Service.Application.DTO.JoinRoomCommandDTO;
+import com.FightClub.Lobby_Service.Application.DTO.JoinRoomPTCommandDTO;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Room.JoinAsPlayerTypeUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.JoinAsSpectatorUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.JoinToPrivateRoomUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.PlayerLeaveRoomUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Output.RoomWsWriter;
+import com.FightClub.Lobby_Service.Domain.Model.Enums.PlayerType;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +21,7 @@ public class PRUEBANOMAS {
     private final JoinToPrivateRoomUseCase jointoPrivateRoomUseCase;
     private final JoinAsSpectatorUseCase joinAsSpectatorUseCase;
     private final PlayerLeaveRoomUseCase playerLeaveRoomUseCase;
+    private final JoinAsPlayerTypeUseCase joinAsPlayerTypeUseCase;
 
     @PostMapping("/join")
     public void joinRoom(
@@ -27,6 +31,18 @@ public class PRUEBANOMAS {
         JoinRoomCommandDTO pojo = new JoinRoomCommandDTO(roomId, guestId);
         jointoPrivateRoomUseCase.joinToPrivateRoom(pojo);
     }
+
+    @PostMapping("/join-2")
+    public void joinRoom2(
+            @RequestParam String roomId,
+            @RequestParam String guestId,
+            @RequestParam String playerType
+    ) {
+        PlayerType playerType2 = PlayerType.valueOf(playerType);
+        JoinRoomPTCommandDTO pojo = new JoinRoomPTCommandDTO(roomId, guestId,playerType2);
+        joinAsPlayerTypeUseCase.JoinAsPlayerType(pojo);
+    }
+
 
     @PostMapping("/leave")
     public void leaveRoom(
