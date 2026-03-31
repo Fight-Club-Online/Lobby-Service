@@ -24,8 +24,17 @@ public class JoinToPrivateRoomImpl implements JoinToPrivateRoomUseCase {
             throw new RuntimeException("Room not found");
         }
         Room r = searchRoomCache.getRoomByCode(joinRoomCommandDTO.roomCode());
-        roomWsWriter.joinRoom(joinRoomCommandDTO.roomCode(), joinRoomCommandDTO.guestId());
-        return playerCacheWriter.addPlayerToRoom(joinRoomCommandDTO.guestId(), r.getRoomId());
+        boolean alreadyIn = r.getPlayers().stream()
+                .anyMatch(p -> p.getUserId().equals(joinRoomCommandDTO.guestId()));
+
+        if (alreadyIn) {
+            roomWsWriter.joinRoom(joinRoomCommandDTO.roomCode(), r);
+            return r;
+        }
+
+        Room updatedRoom = playerCacheWriter.addPlayerToRoom(joinRoomCommandDTO.guestId(), r.getRoomId());
+        roomWsWriter.joinRoom(joinRoomCommandDTO.roomCode(), updatedRoom);
+        return updatedRoom;
 
     }
 }

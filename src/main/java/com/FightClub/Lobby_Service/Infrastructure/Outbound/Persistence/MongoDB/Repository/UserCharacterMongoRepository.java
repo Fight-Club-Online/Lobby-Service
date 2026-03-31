@@ -1,6 +1,5 @@
 package com.FightClub.Lobby_Service.Infrastructure.Outbound.Persistence.MongoDB.Repository;
 
-import com.FightClub.Lobby_Service.Domain.Model.UserCharacter;
 import com.FightClub.Lobby_Service.Infrastructure.Outbound.Persistence.MongoDB.Entity.UserCharacterEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 

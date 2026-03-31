@@ -36,3 +36,4 @@ build/
 ### idea ###
 .idea/
 
+.env.properties
