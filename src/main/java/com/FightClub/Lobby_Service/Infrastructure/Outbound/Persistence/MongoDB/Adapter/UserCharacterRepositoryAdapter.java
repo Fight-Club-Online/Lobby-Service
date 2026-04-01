@@ -30,14 +30,7 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
                 .peek(this::enrichWithAssets) 
                 .toList();
     }
-    
-    @Override
-    public UserCharacter findByCharacterID(Long characterID) {
-        UserCharacterEntity entity = userCharacterMongoRepository.findByCharacterCharacterId(characterID);
-        UserCharacter userCharacter = userCharacterMapper.toDomain(entity);
-        enrichWithAssets(userCharacter); 
-        return userCharacter;
-    }
+
 
     @Override
     public UserCharacter save(UserCharacter userCharacter) {
@@ -51,6 +44,19 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
     @Override
     public UserCharacter findByCharacterName(String characterName) {
         UserCharacterEntity entity = userCharacterMongoRepository.findByCharacterCharacterName(characterName);
+        UserCharacter userCharacter = userCharacterMapper.toDomain(entity);
+        enrichWithAssets(userCharacter);
+        return userCharacter;
+    }
+    
+    @Override
+    public void deleteByCharacterID(String characterID) {
+        userCharacterMongoRepository.deleteById(characterID);
+    }
+    
+    @Override
+    public UserCharacter findByID(String id) {
+        UserCharacterEntity entity = userCharacterMongoRepository.findById(id).orElse(null);
         UserCharacter userCharacter = userCharacterMapper.toDomain(entity);
         enrichWithAssets(userCharacter);
         return userCharacter;

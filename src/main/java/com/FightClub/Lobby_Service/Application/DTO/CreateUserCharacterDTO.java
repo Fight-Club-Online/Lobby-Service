@@ -16,4 +16,5 @@ public class CreateUserCharacterDTO {
     private int characterLevel;
     private String characterHp;
     private String characterATK;
+    private String characterDEF;
 }
