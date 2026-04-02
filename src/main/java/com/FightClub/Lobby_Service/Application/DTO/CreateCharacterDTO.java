@@ -9,11 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CreateUserCharacterDTO {
-    private String userId;
-    private Long characterId;
-    private String characterName;
+public class CreateCharacterDTO {
+    private long characterId;
     private Long characterLevel;
+    private String characterName;
     private String characterHp;
     private String characterATK;
     private String characterDEF;

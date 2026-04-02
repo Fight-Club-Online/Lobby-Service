@@ -24,7 +24,7 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
 
     @Override
     public List<UserCharacter> findByUserID(String userId) {
-        return userCharacterMongoRepository.findByUser(userId)
+        return userCharacterMongoRepository.findByUserId(userId)
                 .stream()
                 .map(userCharacterMapper::toDomain)
                 .peek(this::enrichWithAssets) 
@@ -43,20 +43,24 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
     
     @Override
     public UserCharacter findByCharacterName(String characterName) {
-        UserCharacterEntity entity = userCharacterMongoRepository.findByCharacterCharacterName(characterName);
-        UserCharacter userCharacter = userCharacterMapper.toDomain(entity);
-        enrichWithAssets(userCharacter);
-        return userCharacter;
+        // Busca por characterName directamente (ahora es atributo de UserCharacter)
+        return userCharacterMongoRepository.findAll()
+                .stream()
+                .filter(uc -> uc.getCharacterName().equals(characterName))
+                .findFirst()
+                .map(userCharacterMapper::toDomain)
+                .orElse(null);
     }
     
     @Override
-    public void deleteByCharacterID(String characterID) {
-        userCharacterMongoRepository.deleteById(characterID);
+    public void deleteByUserIdAndCharacterId(String userId, Long characterId) {
+        userCharacterMongoRepository.deleteByUserIdAndCharacterId(userId, characterId);
     }
     
     @Override
-    public UserCharacter findByID(String id) {
-        UserCharacterEntity entity = userCharacterMongoRepository.findById(id).orElse(null);
+    public UserCharacter findByUserIdAndCharacterId(String userId, Long characterId) {
+        UserCharacterEntity entity = userCharacterMongoRepository.findByUserIdAndCharacterId(userId, characterId).orElse(null);
+        if (entity == null) return null;
         UserCharacter userCharacter = userCharacterMapper.toDomain(entity);
         enrichWithAssets(userCharacter);
         return userCharacter;

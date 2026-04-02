@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class Character {
     private long characterId;
-    private int characterLevel;
+    private Long characterLevel;
     private String characterName;
     private String characterHp;
     private String characterATK;

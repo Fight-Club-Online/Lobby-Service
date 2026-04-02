@@ -8,6 +8,6 @@ public interface UserCharacterRepository {
     List<UserCharacter> findByUserID(String userId);
     UserCharacter save(UserCharacter userCharacter);
     UserCharacter findByCharacterName(String characterName);
-    void deleteByCharacterID(String characterID);
-    UserCharacter findByID(String id);
+    void deleteByUserIdAndCharacterId(String userId, Long characterId);
+    UserCharacter findByUserIdAndCharacterId(String userId, Long characterId);
 }

@@ -1,6 +1,5 @@
 package com.FightClub.Lobby_Service.Domain.Model;
 
-import io.micrometer.core.instrument.Meter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,8 +11,12 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserCharacter {
     
-    private String id;
-    private Character character;
-    private String user;
-    private CharacterAssets assets;
+    private String userId;              
+    private Long characterId;           
+    private String characterName;       
+    private Long characterLevel;        
+    private String characterHp;          
+    private String characterATK;         
+    private String characterDEF;        
+    private CharacterAssets assets;     
 }
