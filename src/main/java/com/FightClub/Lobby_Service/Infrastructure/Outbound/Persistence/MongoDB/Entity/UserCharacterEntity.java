@@ -17,12 +17,12 @@ public class UserCharacterEntity {
 
     private String userId;              
     @Id
-    private Long characterId;           
-    private Long characterLevel;       
+    private String characterId;           
+    private int characterLevel;       
     private String characterName;       
-    private String characterHp;        
-    private String characterATK;        
-    private String characterDEF;       
+    private int characterHp;        
+    private int characterATK;        
+    private int characterDEF;       
 
     private CharacterAssetsEntity assets;
 

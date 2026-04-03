@@ -22,7 +22,7 @@ public class AssetController {
         }
 
         try {
-            Resource resource = new ClassPathResource("assets/" + fileName);
+            Resource resource = new ClassPathResource("assets/pj1/" + fileName);
             
             if (!resource.exists()) {
                 return ResponseEntity.notFound().build();

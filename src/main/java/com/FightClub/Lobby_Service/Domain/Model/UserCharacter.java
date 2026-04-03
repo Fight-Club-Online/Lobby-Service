@@ -12,11 +12,11 @@ import lombok.NoArgsConstructor;
 public class UserCharacter {
     
     private String userId;              
-    private Long characterId;           
+    private String characterId;           
     private String characterName;       
-    private Long characterLevel;        
-    private String characterHp;          
-    private String characterATK;         
-    private String characterDEF;        
+    private int characterLevel;        
+    private int characterHp;          
+    private int characterATK;         
+    private int characterDEF;        
     private CharacterAssets assets;     
 }
