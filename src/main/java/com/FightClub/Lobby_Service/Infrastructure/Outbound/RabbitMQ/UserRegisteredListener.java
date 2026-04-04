@@ -4,7 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import com.FightClub.Lobby_Service.Application.DTO.CreateUserCharacterDTO;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Character.CreateUserCharacterUseCase;
-import com.FightClub.Lobby_Service.Infrastructure.Outbound.RabbitMQ.Event.GuestRegisteredEvent;
+import com.FightClub.Lobby_Service.Infrastructure.Outbound.RabbitMQ.Event.UserRegisteredEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import java.util.Random;
@@ -12,24 +12,25 @@ import java.util.Random;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class GuestRegisteredListener {
+public class UserRegisteredListener {
 
     private final CreateUserCharacterUseCase createUserCharacterUseCase;
     private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     private static final int ID_LENGTH = 10;
 
-    @RabbitListener(queues = "user.guest.registered.queue")
-    public void recibirEvento(GuestRegisteredEvent event) {
+    @RabbitListener(queues = "user.registered.queue")
+    public void recibirEvento(UserRegisteredEvent event) {
 
-        log.info("Evento recibido: Guest registrado");
+        log.info("Evento recibido: Usuario registrado");
         log.info("UserId: {}", event.getUserId());
+        log.info("Username: {}", event.getUsername());
 
         String randomCharacterId = generateRandomId();
 
         CreateUserCharacterDTO characterDTO = CreateUserCharacterDTO.builder()
                 .userId(event.getUserId())
                 .characterId(randomCharacterId)
-                .characterName("Guest Hero")
+                .characterName(event.getUsername() + "'s Character")
                 .characterLevel(1)
                 .characterHp(100)
                 .characterATK(10)

@@ -14,7 +14,7 @@ public class GetUserCharacterAssetsImpl implements GetUserCharacterAssetsUseCase
     private final UserCharacterRepository userCharacterRepository;
 
     @Override
-    public CharacterAssets getUserCharacterAssets(String userId, Long characterId) {
+    public CharacterAssets getUserCharacterAssets(String userId, String characterId) {
         UserCharacter userCharacter = userCharacterRepository.findByUserIdAndCharacterId(userId, characterId);
         if (userCharacter != null && userCharacter.getAssets() != null) {
             return userCharacter.getAssets();

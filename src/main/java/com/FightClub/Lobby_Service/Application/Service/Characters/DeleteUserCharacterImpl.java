@@ -12,7 +12,7 @@ public class DeleteUserCharacterImpl implements DeleteUserCharacterUseCase {
     private final UserCharacterRepository userCharacterRepository;
 
     @Override
-    public void deleteUserCharacter(String userId, Long characterId) {
+    public void deleteUserCharacter(String userId, String characterId) {
         userCharacterRepository.deleteByUserIdAndCharacterId(userId, characterId);
     }
 }

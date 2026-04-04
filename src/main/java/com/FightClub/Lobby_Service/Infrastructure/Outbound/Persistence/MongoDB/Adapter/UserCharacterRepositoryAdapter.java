@@ -43,7 +43,7 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
     
     @Override
     public UserCharacter findByCharacterName(String characterName) {
-        // Busca por characterName directamente (ahora es atributo de UserCharacter)
+
         return userCharacterMongoRepository.findAll()
                 .stream()
                 .filter(uc -> uc.getCharacterName().equals(characterName))
@@ -53,12 +53,17 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
     }
     
     @Override
-    public void deleteByUserIdAndCharacterId(String userId, Long characterId) {
+    public void deleteByUserIdAndCharacterId(String userId, String characterId) {
         userCharacterMongoRepository.deleteByUserIdAndCharacterId(userId, characterId);
     }
     
     @Override
-    public UserCharacter findByUserIdAndCharacterId(String userId, Long characterId) {
+    public void deleteByUserId(String userId) {
+        userCharacterMongoRepository.deleteByUserId(userId);
+    }
+    
+    @Override
+    public UserCharacter findByUserIdAndCharacterId(String userId, String characterId) {
         UserCharacterEntity entity = userCharacterMongoRepository.findByUserIdAndCharacterId(userId, characterId).orElse(null);
         if (entity == null) return null;
         UserCharacter userCharacter = userCharacterMapper.toDomain(entity);

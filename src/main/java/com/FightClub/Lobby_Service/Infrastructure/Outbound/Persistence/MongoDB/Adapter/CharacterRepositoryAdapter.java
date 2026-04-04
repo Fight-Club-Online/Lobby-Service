@@ -23,14 +23,14 @@ public class CharacterRepositoryAdapter implements CharacterRepository {
     }
 
     @Override
-    public Character findByCharacterId(long characterId) {
+    public Character findByCharacterId(String characterId) {
         return characterMongoRepository.findByCharacterId(characterId)
                 .map(characterMapper::toDomain)
                 .orElse(null);
     }
 
     @Override
-    public void deleteByCharacterId(long characterId) {
+    public void deleteByCharacterId(String characterId) {
         characterMongoRepository.deleteByCharacterId(characterId);
     }
 }
