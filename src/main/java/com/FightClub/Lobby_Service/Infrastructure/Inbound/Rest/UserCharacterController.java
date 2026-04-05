@@ -39,7 +39,7 @@ public class UserCharacterController {
     @DeleteMapping("/{characterId}")
     public ResponseEntity<Void> deleteUserCharacter(
             @RequestParam String userId,
-            @PathVariable Long characterId){
+            @PathVariable String characterId){
         deleteUserCharacterUseCase.deleteUserCharacter(userId, characterId);
         return ResponseEntity.noContent().build();
     }
@@ -47,7 +47,7 @@ public class UserCharacterController {
     @GetMapping("/{characterId}/assets")
     public ResponseEntity<CharacterAssets> getUserCharacterAssets(
             @RequestParam String userId,
-            @PathVariable Long characterId){
+            @PathVariable String characterId){
         CharacterAssets assets = getUserCharacterAssetsUseCase.getUserCharacterAssets(userId, characterId);
         if (assets != null) {
             return ResponseEntity.ok(assets);

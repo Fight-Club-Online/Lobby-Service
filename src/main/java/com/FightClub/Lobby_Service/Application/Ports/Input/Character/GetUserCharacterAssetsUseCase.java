@@ -3,5 +3,5 @@ package com.FightClub.Lobby_Service.Application.Ports.Input.Character;
 import com.FightClub.Lobby_Service.Domain.Model.CharacterAssets;
 
 public interface GetUserCharacterAssetsUseCase {
-    CharacterAssets getUserCharacterAssets(String userId, Long characterId);
+    CharacterAssets getUserCharacterAssets(String userId, String characterId);
 }

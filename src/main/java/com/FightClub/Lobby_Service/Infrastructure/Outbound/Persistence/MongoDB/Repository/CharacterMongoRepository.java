@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface CharacterMongoRepository
         extends MongoRepository<CharacterEntity, Long> {
 
-    Optional<CharacterEntity> findByCharacterId(long characterId);
+    Optional<CharacterEntity> findByCharacterId(String characterId);
 
-    void deleteByCharacterId(long characterId);
+    void deleteByCharacterId(String characterId);
 }
