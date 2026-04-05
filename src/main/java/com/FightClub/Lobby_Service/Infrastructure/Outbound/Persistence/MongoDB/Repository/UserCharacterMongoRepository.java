@@ -4,13 +4,16 @@ import com.FightClub.Lobby_Service.Infrastructure.Outbound.Persistence.MongoDB.E
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserCharacterMongoRepository
-        extends MongoRepository<UserCharacterEntity, String> {
+        extends MongoRepository<UserCharacterEntity, Long> {
 
-    List<UserCharacterEntity> findByUser(String user);
+    List<UserCharacterEntity> findByUserId(String userId);
 
-    UserCharacterEntity findByCharacterCharacterId(Long characterId);
+    Optional<UserCharacterEntity> findByUserIdAndCharacterId(String userId, Long characterId);
 
-    UserCharacterEntity findByCharacterCharacterName(String characterName);
+    void deleteByUserIdAndCharacterId(String userId, Long characterId);
+
+    void deleteByUserId(String userId);
 }

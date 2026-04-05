@@ -15,11 +15,15 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "user_characters")
 public class UserCharacterEntity {
 
+    private String userId;              
     @Id
-    private String id;
+    private String characterId;           
+    private int characterLevel;       
+    private String characterName;       
+    private int characterHp;        
+    private int characterATK;        
+    private int characterDEF;       
 
-    private CharacterEntity character;
-
-    private String user;
+    private CharacterAssetsEntity assets;
 
 }
