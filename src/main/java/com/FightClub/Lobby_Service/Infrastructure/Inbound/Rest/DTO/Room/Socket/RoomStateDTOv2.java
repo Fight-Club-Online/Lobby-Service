@@ -19,5 +19,5 @@ public class RoomStateDTOv2 {
     private int currentPlayers;
     private int currentSpectators;
     private int maxSpectators;
-    private long roomId;
+    private String roomId;
 }

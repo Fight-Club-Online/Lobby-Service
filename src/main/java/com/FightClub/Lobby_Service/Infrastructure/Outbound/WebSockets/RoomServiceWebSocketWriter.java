@@ -42,6 +42,7 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
                 "/room/" + room.getRoomCode(),
                 roomStateMapperv2.toDto(room)
         );
+        System.out.println(roomStateMapperv2.toDto(room).getRoomId());
     }
 
 
