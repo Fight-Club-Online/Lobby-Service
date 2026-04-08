@@ -34,5 +34,13 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
         );
     }
 
+    @Override
+    public void StartGame(Room room) {
+        messagingTemplate.convertAndSend(
+                "/room/" + room.getRoomId(),
+                "Room:" + room.getRoomId()  + " ha iniciado"
+        );
+    }
+
 
 }
