@@ -1,6 +1,7 @@
 package com.FightClub.Lobby_Service.Infrastructure.Outbound.WebSockets;
 
 import com.FightClub.Lobby_Service.Application.Ports.Output.RoomWsWriter;
+import com.FightClub.Lobby_Service.Domain.Model.Room;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,14 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
         messagingTemplate.convertAndSend(
                 "/room/" + roomId,
                 guestId + " ha salido"
+        );
+    }
+
+    @Override
+    public void StartGame(Room room) {
+        messagingTemplate.convertAndSend(
+                "/room/" + room.getRoomId(),
+                "Room:" + room.getRoomId()  + " ha iniciado"
         );
     }
 
