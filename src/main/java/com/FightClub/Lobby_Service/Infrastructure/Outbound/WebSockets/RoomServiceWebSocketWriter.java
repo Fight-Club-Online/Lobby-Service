@@ -3,6 +3,7 @@ package com.FightClub.Lobby_Service.Infrastructure.Outbound.WebSockets;
 import com.FightClub.Lobby_Service.Application.Ports.Output.RoomWsWriter;
 import com.FightClub.Lobby_Service.Domain.Model.Room;
 import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStateMapper;
+import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.Socket.RoomStateMapperv2;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
 
     private final SimpMessagingTemplate messagingTemplate;
     private final RoomStateMapper roomStateMapper;
+    private final RoomStateMapperv2 roomStateMapperv2;
 
     @Override
     public void joinRoom(String roomId, Room room) {
