@@ -7,7 +7,7 @@ import com.FightClub.Lobby_Service.Application.Ports.Input.Character.CreateUserC
 import com.FightClub.Lobby_Service.Infrastructure.Outbound.RabbitMQ.Event.UserRegisteredEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import java.util.Random;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -15,8 +15,6 @@ import java.util.Random;
 public class UserRegisteredListener {
 
     private final CreateUserCharacterUseCase createUserCharacterUseCase;
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final int ID_LENGTH = 10;
 
     @RabbitListener(queues = "user.registered.queue")
     public void recibirEvento(UserRegisteredEvent event) {
@@ -25,11 +23,11 @@ public class UserRegisteredListener {
         log.info("UserId: {}", event.getUserId());
         log.info("Username: {}", event.getUsername());
 
-        String randomCharacterId = generateRandomId();
+        String uniqueCharacterId = UUID.randomUUID().toString();
 
         CreateUserCharacterDTO characterDTO = CreateUserCharacterDTO.builder()
                 .userId(event.getUserId())
-                .characterId(randomCharacterId)
+                .characterId(uniqueCharacterId)
                 .characterName(event.getUsername() + "'s Character")
                 .characterLevel(1)
                 .characterHp(100)
@@ -39,18 +37,9 @@ public class UserRegisteredListener {
 
         try {
             createUserCharacterUseCase.createUserCharacter(characterDTO);
-            log.info(" Character creado exitosamente para usuario: {} con ID: {}", event.getUserId(), randomCharacterId);
+            log.info("Character creado exitosamente para usuario: {} con ID: {}", event.getUserId(), uniqueCharacterId);
         } catch (Exception e) {
-            log.error(" Error al crear character para usuario: {}", event.getUserId(), e);
+            log.error("Error al crear character para usuario: {}", event.getUserId(), e);
         }
-    }
-
-    private String generateRandomId() {
-        Random random = new Random();
-        StringBuilder id = new StringBuilder(ID_LENGTH);
-        for (int i = 0; i < ID_LENGTH; i++) {
-            id.append(CHARACTERS.charAt(random.nextInt(CHARACTERS.length())));
-        }
-        return id.toString();
     }
 }
