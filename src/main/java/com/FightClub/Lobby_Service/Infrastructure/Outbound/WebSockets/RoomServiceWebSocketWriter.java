@@ -38,7 +38,7 @@ public class RoomServiceWebSocketWriter implements RoomWsWriter {
     public void StartGame(Room room) {
         messagingTemplate.convertAndSend(
                 "/room/" + room.getRoomId(),
-                "Room:" + room.getRoomId()  + " ha iniciado"
+                roomStateMapper.toDto(room)
         );
     }
 

@@ -28,7 +28,7 @@ public class RoomServiceRedisWriter implements RoomCacheWriter {
         long roomIdLong = (long) roomId;
         Room r = (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
         if(r == null) throw new RuntimeException("Room not found");
-        r.setRoomState(RoomState.PLAYING);
+        r.setRoomState(RoomState.IN_PROGRESS);
         updateTTL.updateTTL(r);
         return r;
     }
