@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
 public interface RoomStateMapperv2 {
-    RoomStateDTO toDto(Room room);
+    RoomStateDTOv2 toDto(Room room);
 
     default String map(RoomState state) {
         return state != null ? state.name() : null;
