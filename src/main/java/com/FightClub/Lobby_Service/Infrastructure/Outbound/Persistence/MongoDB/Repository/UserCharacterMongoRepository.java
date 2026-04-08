@@ -14,4 +14,6 @@ public interface UserCharacterMongoRepository
     Optional<UserCharacterEntity> findByUserIdAndCharacterId(String userId, Long characterId);
 
     void deleteByUserIdAndCharacterId(String userId, Long characterId);
+
+    void deleteByUserId(String userId);
 }

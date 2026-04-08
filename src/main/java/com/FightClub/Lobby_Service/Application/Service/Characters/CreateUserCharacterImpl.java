@@ -17,13 +17,13 @@ public class CreateUserCharacterImpl implements CreateUserCharacterUseCase {
     public UserCharacter createUserCharacter(CreateUserCharacterDTO dto) {
         // Crear una copia independiente del Character con stats iniciales
         UserCharacter userCharacter = UserCharacter.builder()
-                .characterId(dto.getCharacterId())      // Referencia al template
-                .characterName(dto.getCharacterName())  // Copia del nombre
-                .characterLevel(dto.getCharacterLevel())// Copia del nivel inicial
-                .characterHp(dto.getCharacterHp())      // Copia del HP inicial
-                .characterATK(dto.getCharacterATK())    // Copia del ATK inicial
-                .characterDEF(dto.getCharacterDEF())    // Copia del DEF inicial
-                .userId(dto.getUserId())                // Usuario propietario
+                .characterId(dto.getCharacterId())      
+                .characterName(dto.getCharacterName())  
+                .characterLevel(dto.getCharacterLevel())
+                .characterHp(dto.getCharacterHp())      
+                .characterATK(dto.getCharacterATK())    
+                .characterDEF(dto.getCharacterDEF())    
+                .userId(dto.getUserId())                
                 .build();
 
         return userCharacterRepository.save(userCharacter);
