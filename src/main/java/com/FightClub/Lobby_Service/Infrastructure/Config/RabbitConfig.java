@@ -50,9 +50,9 @@ public class RabbitConfig {
     }
 
     public static final String USER_EXCHANGE = "user.events";
-    public static final String GUEST_REGISTERED_QUEUE = "user.guest.registered.queue";
+    public static final String GUEST_REGISTERED_QUEUE = "new.guest.queue";
     public static final String ROUTING_KEY_GUEST_REGISTERED = "user.guest.registered";
-    public static final String REGISTERED_QUEUE = "user.registered.queue";
+    public static final String REGISTERED_QUEUE = "new.user.queue";
     public static final String ROUTING_KEY_REGISTERED = "user.registered";
     public static final String DELETED_QUEUE = "user.deleted.queue";
     public static final String ROUTING_KEY_DELETED = "user.deleted";

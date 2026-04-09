@@ -18,4 +18,9 @@ public class SeeUserCharacterImpl implements SeeUserCharactersUseCase {
     public List<UserCharacter> seeUserCharacters(String userId){
         return userCharacterRepository.findByUserID(userId);
     }
+
+    @Override
+    public List<UserCharacter> seeAllUserCharacters() {
+        return userCharacterRepository.findAllUserCharacters();
+    }
 }

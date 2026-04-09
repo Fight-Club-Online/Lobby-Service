@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface UserCharacterRepository {
     List<UserCharacter> findByUserID(String userId);
+    List<UserCharacter> findAllUserCharacters();
     UserCharacter save(UserCharacter userCharacter);
     UserCharacter findByCharacterName(String characterName);
     void deleteByUserIdAndCharacterId(String userId, String characterId);

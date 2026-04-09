@@ -28,6 +28,12 @@ public class UserCharacterController {
         return ResponseEntity.ok(characters);
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<UserCharacter>> seeAllUserCharacters(){
+        List<UserCharacter> characters = seeUserCharactersUseCase.seeAllUserCharacters();
+        return ResponseEntity.ok(characters);
+    }
+
 
     @PostMapping("/create")
     public ResponseEntity<UserCharacter> createUserCharacter(@RequestBody CreateUserCharacterDTO dto){

@@ -31,6 +31,15 @@ public class UserCharacterRepositoryAdapter implements UserCharacterRepository {
                 .toList();
     }
 
+    @Override
+    public List<UserCharacter> findAllUserCharacters() {
+        return userCharacterMongoRepository.findAll()
+                .stream()
+                .map(userCharacterMapper::toDomain)
+                .peek(this::enrichWithAssets)
+                .toList();
+    }
+
 
     @Override
     public UserCharacter save(UserCharacter userCharacter) {

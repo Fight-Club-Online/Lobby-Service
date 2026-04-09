@@ -4,6 +4,7 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 import com.FightClub.Lobby_Service.Application.DTO.CreateUserCharacterDTO;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Character.CreateUserCharacterUseCase;
+import com.FightClub.Lobby_Service.Domain.Model.UserCharacter;
 import com.FightClub.Lobby_Service.Infrastructure.Outbound.RabbitMQ.Event.GuestRegisteredEvent;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +17,7 @@ public class GuestRegisteredListener {
 
     private final CreateUserCharacterUseCase createUserCharacterUseCase;
 
-    @RabbitListener(queues = "user.guest.registered.queue")
+    @RabbitListener(queues = "new.guest.queue")
     public void recibirEvento(GuestRegisteredEvent event) {
 
         log.info("Evento recibido: Guest registrado");
@@ -35,10 +36,12 @@ public class GuestRegisteredListener {
                 .build();
 
         try {
-            createUserCharacterUseCase.createUserCharacter(characterDTO);
-            log.info("Character creado exitosamente para usuario: {} con ID: {}", event.getUserId(), uniqueCharacterId);
+            log.info("Intentando crear character para userId: {} con characterId: {}", event.getUserId(), uniqueCharacterId);
+            UserCharacter created = createUserCharacterUseCase.createUserCharacter(characterDTO);
+            log.info("✅ Character creado exitosamente para usuario: {} con ID: {}, resultado: {}", event.getUserId(), uniqueCharacterId, created);
         } catch (Exception e) {
-            log.error("Error al crear character para usuario: {}", event.getUserId(), e);
+            log.error("❌ ERROR al crear character para usuario: {} - Mensaje: {} - Tipo: {}", 
+                event.getUserId(), e.getMessage(), e.getClass().getSimpleName(), e);
         }
     }
 }

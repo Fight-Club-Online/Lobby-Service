@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface SeeUserCharactersUseCase {
     List<UserCharacter> seeUserCharacters(String userId);
+    List<UserCharacter> seeAllUserCharacters();
 }
