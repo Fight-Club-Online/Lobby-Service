@@ -8,12 +8,22 @@ import com.FightClub.Lobby_Service.Infrastructure.Outbound.Persistence.MongoDB.R
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class CharacterRepositoryAdapter implements CharacterRepository {
 
     private final CharacterMongoRepository characterMongoRepository;
     private final CharacterMapper characterMapper;
+
+    @Override
+    public List<Character> findAllCharacters() {
+        return characterMongoRepository.findAll()
+                .stream()
+                .map(characterMapper::toDomain)
+                .toList();
+    }
 
     @Override
     public Character save(Character character) {
