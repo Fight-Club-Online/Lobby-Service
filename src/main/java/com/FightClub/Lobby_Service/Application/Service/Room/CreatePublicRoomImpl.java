@@ -1,9 +1,10 @@
 package com.FightClub.Lobby_Service.Application.Service.Room;
 
 import com.FightClub.Lobby_Service.Application.Ports.Input.Room.CreatePrivateRoomUseCase;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Room.CreatePublicRoomUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Output.RoomCacheWriter;
-import com.FightClub.Lobby_Service.Domain.Model.Enums.RoomState;
 import com.FightClub.Lobby_Service.Domain.Model.Enums.PlayerType;
+import com.FightClub.Lobby_Service.Domain.Model.Enums.RoomState;
 import com.FightClub.Lobby_Service.Domain.Model.Player;
 import com.FightClub.Lobby_Service.Domain.Model.Room;
 import lombok.AllArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Random;
 
 @Service
 @AllArgsConstructor
-public class CreatePrivateRoomImpl implements CreatePrivateRoomUseCase {
+public class CreatePublicRoomImpl implements CreatePublicRoomUseCase {
 
     private final RoomCacheWriter roomCacheWriter;
 
@@ -33,7 +34,7 @@ public class CreatePrivateRoomImpl implements CreatePrivateRoomUseCase {
                 .currentPlayers(1)
                 .currentSpectators(0)
                 .players(java.util.List.of(player))
-                .isPublic(false)
+                .isPublic(true)
                 .build();
         roomCacheWriter.saveRoom(r);
         return r;

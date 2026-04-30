@@ -8,11 +8,15 @@ import com.FightClub.Lobby_Service.Infrastructure.Inbound.Rest.DTO.Room.RoomStat
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/rooms")
 @AllArgsConstructor
 public class RoomRestController {
 
+    private GetPublicRoomsUseCase getPublicRoomsUseCase;
+    private final CreatePublicRoomUseCase createPublicRoomUseCase;
     private final CreatePrivateRoomUseCase createPrivateRoomUseCase;
     private final GetPrivateRoomCodeUseCase getPrivateRoomCodeUseCase;
     private final GetRoomAvailabilityUseCase getRoomAvailabilityUseCase;
@@ -28,6 +32,16 @@ public class RoomRestController {
     public RoomResponseDTO createPrivateRoom(String hostId) {
        return roomResponseMapper.toDTO(createPrivateRoomUseCase.createPrivateRoom(hostId));
     }
+
+    @PostMapping("/create-public")
+    @io.swagger.v3.oas.annotations.Operation(
+            summary = "Crear una sala publica",
+            description = "Crea una sala publica y retorna el estado inicial de la sala"
+    )
+    public RoomResponseDTO createPublicRoom(String hostId) {
+        return roomResponseMapper.toDTO(createPublicRoomUseCase.createPrivateRoom(hostId));
+    }
+
 
 
     @GetMapping("/code")
@@ -53,5 +67,10 @@ public class RoomRestController {
     @PostMapping("/start-fight/{roomCode}")
     public RoomResponseDTO startFight(@PathVariable  String roomCode) {
         return roomResponseMapper.toDTO(startRoomUseCase.startRoom(roomCode));
+    }
+
+    @GetMapping("/public-rooms")
+    public List<RoomResponseDTO> getPublicRooms() {
+        return getPublicRoomsUseCase.getPublicRooms().stream().map(roomResponseMapper::toDTO).toList();
     }
 }

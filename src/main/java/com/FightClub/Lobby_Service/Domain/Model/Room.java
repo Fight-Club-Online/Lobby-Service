@@ -20,4 +20,5 @@ public class Room {
     private int maxSpectators;
     private int currentSpectators;
     private List<Player> players = new ArrayList<>();
+    private boolean isPublic = false;
 }

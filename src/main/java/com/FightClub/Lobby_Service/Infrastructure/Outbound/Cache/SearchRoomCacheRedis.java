@@ -6,6 +6,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 
 @Service
 @AllArgsConstructor
@@ -59,5 +63,18 @@ public class SearchRoomCacheRedis implements SearchRoomCache {
         if(roomId == null) throw new RuntimeException("Room not found");
         long roomIdLong = (long) roomId;
         return (Room) redisTemplate.opsForValue().get(RedisKeys.ROOM+roomIdLong);
+    }
+
+    @Override
+    public List<Room> getPublicRooms() {
+        Set<String> keys = redisTemplate.keys(RedisKeys.ROOM + "*");
+        List<Room> rooms = new ArrayList<>();
+        for (String key : keys) {
+            Room room = (Room) redisTemplate.opsForValue().get(key);
+            if (room != null && room.isPublic()) {
+                rooms.add(room);
+            }
+        }
+        return rooms;
     }
 }
