@@ -49,7 +49,7 @@ public class GuestRegisteredListener {
         CreateUserCharacterDTO characterDTO2 = CreateUserCharacterDTO.builder()
                 .userId(event.getUserId())
                 .characterId(uniqueCharacterId2)
-                .characterName("Demonio Volador")
+                .characterName("demonio")
                 .characterLevel(1)
                 .characterHp(95)
                 .characterATK(15)
