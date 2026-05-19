@@ -5,6 +5,7 @@ import com.FightClub.Lobby_Service.Application.Ports.Input.Character.SeeUserChar
 import com.FightClub.Lobby_Service.Application.Ports.Input.Character.CreateUserCharacterUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Character.DeleteUserCharacterUseCase;
 import com.FightClub.Lobby_Service.Application.Ports.Input.Character.GetUserCharacterAssetsUseCase;
+import com.FightClub.Lobby_Service.Application.Ports.Input.Character.GetUserCharacterUseCase;
 import com.FightClub.Lobby_Service.Domain.Model.UserCharacter;
 import com.FightClub.Lobby_Service.Domain.Model.CharacterAssets;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class UserCharacterController {
     private final CreateUserCharacterUseCase createUserCharacterUseCase;
     private final DeleteUserCharacterUseCase deleteUserCharacterUseCase;
     private final GetUserCharacterAssetsUseCase getUserCharacterAssetsUseCase;
+    private final GetUserCharacterUseCase getUserCharacterUseCase;
 
     @GetMapping("/user/characters")
     public ResponseEntity<List<UserCharacter>> seeUserCharacters(@RequestParam String userId){
@@ -48,6 +50,17 @@ public class UserCharacterController {
             @PathVariable String characterId){
         deleteUserCharacterUseCase.deleteUserCharacter(userId, characterId);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{characterId}")
+    public ResponseEntity<UserCharacter> getUserCharacter(
+            @RequestParam String userId,
+            @PathVariable String characterId){
+        UserCharacter userCharacter = getUserCharacterUseCase.getUserCharacter(userId, characterId);
+        if (userCharacter != null) {
+            return ResponseEntity.ok(userCharacter);
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{characterId}/assets")
