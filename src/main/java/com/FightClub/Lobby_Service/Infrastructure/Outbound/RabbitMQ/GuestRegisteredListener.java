@@ -31,7 +31,7 @@ public class GuestRegisteredListener {
                 .characterName("samurai")
                 .characterLevel(1)
                 .characterHp(105)
-                .characterATK(20)
+                .characterATK(10)
                 .characterDEF(5)
                 .build();
 
@@ -73,7 +73,7 @@ public class GuestRegisteredListener {
                 .characterName("caballero")
                 .characterLevel(1)
                 .characterHp(110)
-                .characterATK(20)
+                .characterATK(15)
                 .characterDEF(5)
                 .build();
 
@@ -115,7 +115,7 @@ public class GuestRegisteredListener {
                 .characterName("esqueleto")
                 .characterLevel(1)
                 .characterHp(90)
-                .characterATK(10)
+                .characterATK(20)
                 .characterDEF(5)
                 .build();
 

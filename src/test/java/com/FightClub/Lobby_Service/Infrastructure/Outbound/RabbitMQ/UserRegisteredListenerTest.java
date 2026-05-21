@@ -112,7 +112,7 @@ class UserRegisteredListenerTest {
                 .findFirst();
         assertThat(samuraiDTO).isPresent();
         assertThat(samuraiDTO.get().getCharacterHp()).isEqualTo(105);
-        assertThat(samuraiDTO.get().getCharacterATK()).isEqualTo(20);
+        assertThat(samuraiDTO.get().getCharacterATK()).isEqualTo(10);
     }
 
     @Test
